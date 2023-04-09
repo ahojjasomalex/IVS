@@ -6,8 +6,8 @@ class Lexer(object):
         'NUMBER',
         'PLUS',
         'MINUS',
-        'TIMES',
-        'DIVIDE',
+        'MULT',
+        'DIV',
         'LPAREN',
         'RPAREN',
         'FACT',
@@ -16,8 +16,8 @@ class Lexer(object):
 
     t_PLUS = r'\+'
     t_MINUS = r'-'
-    t_TIMES = r'\*'
-    t_DIVIDE = r'/'
+    t_MULT = r'\*'
+    t_DIV = r'/'
     t_LPAREN = r'\('
     t_RPAREN = r'\)'
     t_FACT = r'\!'
@@ -46,6 +46,19 @@ class Lexer(object):
 
     def fill(self, data):
         self.lexer.input(data)
+
+    def clear(self):
+        self.lexer.clear()
+
+    def get_tokens(self):
+
+        return [token for token in self.lexer]
+
+    def get_token_values(self):
+        return [token.value for token in self.lexer]
+
+    def get_token_types(self):
+        return [token.type for token in self.lexer]
 
     def print_tokens(self):
         for token in self.lexer:
