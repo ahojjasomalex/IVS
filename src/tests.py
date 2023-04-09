@@ -21,7 +21,6 @@ class LexerSimpleTestCase(unittest.TestCase):
         data = '5+5'
         l.fill(data)
         token_values = l.get_token_values()
-        l.fill(data)
         token_types = l.get_token_types()
 
         self.assertEqual(token_values, [5.0, '+', 5.0])
@@ -32,7 +31,6 @@ class LexerSimpleTestCase(unittest.TestCase):
         data = '5-5'
         l.fill(data)
         token_values = l.get_token_values()
-        l.fill(data)
         token_types = l.get_token_types()
 
         self.assertEqual(token_values, [5.0, '-', 5.0])
@@ -43,7 +41,6 @@ class LexerSimpleTestCase(unittest.TestCase):
         data = '5*5'
         l.fill(data)
         token_values = l.get_token_values()
-        l.fill(data)
         token_types = l.get_token_types()
 
         self.assertEqual(token_values, [5.0, '*', 5.0])
@@ -54,7 +51,6 @@ class LexerSimpleTestCase(unittest.TestCase):
         data = '5/5'
         l.fill(data)
         token_values = l.get_token_values()
-        l.fill(data)
         token_types = l.get_token_types()
 
         self.assertEqual(token_values, [5.0, '/', 5.0])
@@ -65,7 +61,6 @@ class LexerSimpleTestCase(unittest.TestCase):
         data = '5!'
         l.fill(data)
         token_values = l.get_token_values()
-        l.fill(data)
         token_types = l.get_token_types()
 
         self.assertEqual(token_values, [5.0, '!'])

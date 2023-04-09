@@ -26,6 +26,7 @@ class Lexer(object):
 
     def __init__(self):
         self.lexer = None
+        self.toks = []
         self.build()
 
     def build(self, **kwargs):
@@ -46,20 +47,21 @@ class Lexer(object):
 
     def fill(self, data):
         self.lexer.input(data)
+        for token in self.lexer:
+            self.toks.append(token)
 
     def clear(self):
-        self.lexer.clear()
+        if self.toks is not None:
+            self.toks = []
 
     def get_tokens(self):
-
-        return [token for token in self.lexer]
+        return self.toks
 
     def get_token_values(self):
-        return [token.value for token in self.lexer]
+        return [token.value for token in self.toks]
 
     def get_token_types(self):
-        return [token.type for token in self.lexer]
+        return [token.type for token in self.toks]
 
     def print_tokens(self):
-        for token in self.lexer:
-            print(token)
+        print([token for token in self.toks])
