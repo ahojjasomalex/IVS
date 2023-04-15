@@ -9,14 +9,15 @@ class Parser(object):
 
     def __init__(self):
         self.lexer = Lexer()
-        self.parser = yacc.yacc(module=self, write_tables=False, debug=True)
+        self.parser = yacc.yacc(module=self, debug=False)
 
     tokens = Lexer.tokens
     precedence = (
         ('left', 'PLUS', 'MINUS'),
         ('left', 'MULT', 'DIV'),
         ('right', 'UMINUS'),
-        ('left', 'LPAREN', 'RPAREN')
+        ('left', 'LPAREN', 'RPAREN'),
+        ('left', 'POW', 'SQRT')
     )
 
     def p_expr_uminus(self, p):
@@ -51,6 +52,10 @@ class Parser(object):
         'term : term SQRT factor'
         p[0] = p[3] ** (1 / p[1])
 
+    def p_term_pow(self, p):
+        'term : term POW factor'
+        p[0] = p[1] ** p[3]
+
     def p_term_factor(self, p):
         'term : factor'
         p[0] = p[1]
@@ -76,3 +81,4 @@ class Parser(object):
     # Error rule for syntax errors
     def p_error(self, p):
         print("Syntax error in input!")
+        p[0] = None

@@ -93,6 +93,12 @@ class ParserSimpleTestCase(unittest.TestCase):
         res = p.parser.parse(data)
         self.assertEqual(res, 3.0)
 
+    def test_simple_pow(self):
+        p = Parser()
+        data = '3^3'
+        res = p.parser.parse(data)
+        self.assertEqual(res, 27.0)
+
     def test_simple_fact(self):
         p = Parser()
         data = '5!'
