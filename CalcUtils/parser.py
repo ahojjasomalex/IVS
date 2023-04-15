@@ -1,3 +1,5 @@
+import sys
+
 import ply.yacc as yacc
 from .lexer import Lexer
 from math import factorial
@@ -7,7 +9,7 @@ class Parser(object):
 
     def __init__(self):
         self.lexer = Lexer()
-        self.parser = yacc.yacc(module=self)
+        self.parser = yacc.yacc(module=self, write_tables=False, debug=True)
 
     tokens = Lexer.tokens
     precedence = (
@@ -42,8 +44,8 @@ class Parser(object):
         try:
             p[0] = p[1] / p[3]
         except ZeroDivisionError as e:
-            print(e)  # TODO zero division
-
+            print(e, file=sys.stderr)
+            p[0] = None
 
     def p_term_sqrt(self, p):
         'term : term SQRT factor'
@@ -56,6 +58,16 @@ class Parser(object):
     def p_factor_num(self, p):
         'factor : NUMBER'
         p[0] = p[1]
+
+    def p_factor_fact(self, p):
+        'factor : NUMBER FACT'
+        to_fact = p[1]
+        if to_fact.is_integer():
+            p[0] = factorial(int(p[1]))
+        else:
+            print(f"{to_fact} is not an integer", file=sys.stderr)
+            p[0] = None
+
 
     def p_factor_expr(self, p):
         'factor : LPAREN expression RPAREN'

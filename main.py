@@ -3,7 +3,7 @@ from CalcUtils import parser
 
 def main():
     p = parser.Parser()
-    data = '(3.1+3)*2'
+    data = '5!'
     res = p.parser.parse(data)
     print(res)
 

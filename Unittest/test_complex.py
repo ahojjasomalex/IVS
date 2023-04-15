@@ -21,9 +21,9 @@ class ParserComplexTestCase(unittest.TestCase):
         res = p.parser.parse(data)
         self.assertEqual(res, 111.3)
 
-    def test_parser_add_sub_mult_div_4(self):
+    def test_parser_zero_div(self):
         p = Parser()
-        data = '2/0'
+        data = '2/(2-2)'
         res = p.parser.parse(data)
         self.assertEqual(res, None)
 
