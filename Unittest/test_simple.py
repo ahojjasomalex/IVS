@@ -1,21 +1,10 @@
 import unittest
-from ivs_math import Operations
-from lexer import Lexer
-
-
-class MyTestCase(unittest.TestCase):
-
-    def test_add(self):
-        op = Operations()
-        a = 1
-        b = 2
-        op.add(a, b)
-        op.calc()
-
-        self.assertEqual(a + b, op.callstack[0])  # add assertion here
+from CalcUtils.lexer import Lexer
+from CalcUtils.parser import Parser
 
 
 class LexerSimpleTestCase(unittest.TestCase):
+
     def test_simple_add(self):
         l = Lexer()
         data = '5+5'
@@ -65,6 +54,56 @@ class LexerSimpleTestCase(unittest.TestCase):
 
         self.assertEqual(token_values, [5.0, '!'])
         self.assertEqual(token_types, ['NUMBER', 'FACT'])
+
+
+class ParserSimpleTestCase(unittest.TestCase):
+    def test_simple_add(self):
+        p = Parser()
+        data = '3+3'
+        res = p.parser.parse(data)
+        self.assertEqual(res, 6.0)
+
+    def test_simple_sub(self):
+        p = Parser()
+        data = '3-2'
+        res = p.parser.parse(data)
+        self.assertEqual(res, 1.0)
+
+    def test_simple_sub_neg(self):
+        p = Parser()
+        data = '2-3'
+        res = p.parser.parse(data)
+        self.assertEqual(res, -1.0)
+
+    def test_simple_mult(self):
+        p = Parser()
+        data = '3*3'
+        res = p.parser.parse(data)
+        self.assertEqual(res, 9.0)
+
+    def test_simple_div(self):
+        p = Parser()
+        data = '3/3'
+        res = p.parser.parse(data)
+        self.assertEqual(res, 1.0)
+
+    def test_simple_sqrt(self):
+        p = Parser()
+        data = '3`27'
+        res = p.parser.parse(data)
+        self.assertEqual(res, 3.0)
+
+    def test_simple_fact(self):
+        p = Parser()
+        data = '5!'
+        res = p.parser.parse(data)
+        self.assertEqual(res, 120.0)
+
+    def test_simple_neg_nums(self):
+        p = Parser()
+        data = '-2+(-3)'
+        res = p.parser.parse(data)
+        self.assertEqual(res, -5.0)
 
 
 if __name__ == '__main__':

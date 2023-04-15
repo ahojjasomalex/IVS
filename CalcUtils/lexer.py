@@ -27,10 +27,7 @@ class Lexer(object):
     def __init__(self):
         self.lexer = None
         self.toks = []
-        self.build()
-
-    def build(self, **kwargs):
-        self.lexer = lex.lex(module=self, **kwargs)
+        self.lexer = lex.lex(module=self)
 
     def t_NUMBER(self, t):
         r'\d+(?:\.\d+)?'
