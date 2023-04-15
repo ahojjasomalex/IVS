@@ -1,3 +1,4 @@
+import sys
 import ply.lex as lex
 
 
@@ -32,17 +33,17 @@ class Lexer(object):
         self.lexer = lex.lex(module=self)
 
     def t_NUMBER(self, t):
-        r'\d+(?:\.\d+)?'
+        r"""\d+(?:\.\d+)?"""
         t.value = float(t.value)
         return t
 
     def t_newline(self, t):
-        r'\n+'
+        r"""\n+"""
         t.lexer.lineno += len(t.value)
 
     def t_error(self, t):
-        print("Illegal character '%s'" % t.value[0])
-        t.lexer.skip(1)
+        print(f"Illegal character '{t.value[0]}'", file=sys.stderr)
+        self.clear()
 
     def fill(self, data):
         self.lexer.input(data)
