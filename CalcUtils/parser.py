@@ -15,7 +15,7 @@ class Parser(object):
         ('left', 'PLUS', 'MINUS'),
         ('left', 'MULT', 'DIV'),
         ('right', 'UMINUS'),
-        ('left', 'LPAREN', 'RPAREN'),
+        ('left', 'LPAREN', 'RPAREN', 'FACT'),
         ('left', 'POW', 'SQRT')
     )
 
@@ -64,10 +64,10 @@ class Parser(object):
         p[0] = p[1]
 
     def p_factor_fact(self, p):
-        """factor : NUMBER FACT"""
+        """factor : term FACT"""
         to_fact = p[1]
         if to_fact.is_integer():
-            p[0] = factorial(int(p[1]))
+            p[0] = float(factorial(int(p[1])))
         else:
             print(f"{to_fact} is not an integer", file=sys.stderr)
             p[0] = None

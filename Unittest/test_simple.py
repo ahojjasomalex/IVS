@@ -111,6 +111,12 @@ class ParserSimpleTestCase(unittest.TestCase):
         res = p.parser.parse(data)
         self.assertEqual(res, None)
 
+    def test_simple_fact_3(self):
+        p = Parser()
+        data = '(2+3)!'
+        res = p.parser.parse(data)
+        self.assertEqual(res, 120.0)
+
     def test_simple_neg_nums(self):
         p = Parser()
         data = '-2+(-3)'
