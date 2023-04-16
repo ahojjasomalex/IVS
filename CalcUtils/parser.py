@@ -48,20 +48,12 @@ class Parser(object):
             p[0] = None
 
     def p_term_sqrt(self, p):
-        """term : term SQRT factor"""
+        """factor : term SQRT factor"""
         p[0] = p[3] ** (1 / p[1])
 
     def p_term_pow(self, p):
-        """term : term POW factor"""
+        """factor : term POW factor"""
         p[0] = p[1] ** p[3]
-
-    def p_term_factor(self, p):
-        """term : factor"""
-        p[0] = p[1]
-
-    def p_factor_num(self, p):
-        """factor : NUMBER"""
-        p[0] = p[1]
 
     def p_factor_fact(self, p):
         """factor : term FACT"""
@@ -71,6 +63,14 @@ class Parser(object):
         else:
             print(f"{to_fact} is not an integer", file=sys.stderr)
             p[0] = None
+
+    def p_term_factor(self, p):
+        """term : factor"""
+        p[0] = p[1]
+
+    def p_factor_num(self, p):
+        """factor : NUMBER"""
+        p[0] = p[1]
 
     def p_factor_expr(self, p):
         """factor : LPAREN expression RPAREN"""

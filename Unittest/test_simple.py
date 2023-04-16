@@ -55,6 +55,15 @@ class LexerSimpleTestCase(unittest.TestCase):
         self.assertEqual(token_values, [5.0, '!'])
         self.assertEqual(token_types, ['NUMBER', 'FACT'])
 
+    def test_simple_badchars(self):
+        l = Lexer()
+        data = 'aghsfdajhoiaowudiandasd0721'
+        l.fill(data)
+        token_values = l.get_token_values()
+        token_types = l.get_token_types()
+        self.assertEqual(token_values, [])
+        self.assertEqual(token_types, [])
+
 
 class ParserSimpleTestCase(unittest.TestCase):
     def test_simple_add(self):

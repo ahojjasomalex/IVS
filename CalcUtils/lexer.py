@@ -1,4 +1,6 @@
 import sys
+
+import ply.lex
 import ply.lex as lex
 
 
@@ -28,7 +30,6 @@ class Lexer(object):
     t_ignore = ' \t'
 
     def __init__(self):
-        self.lexer = None
         self.toks = []
         self.lexer = lex.lex(module=self)
 
@@ -43,12 +44,14 @@ class Lexer(object):
 
     def t_error(self, t):
         print(f"Illegal character '{t.value[0]}'", file=sys.stderr)
-        self.clear()
 
     def fill(self, data):
         self.lexer.input(data)
-        for token in self.lexer:
-            self.toks.append(token)
+        try:
+            for token in self.lexer:
+                self.toks.append(token)
+        except ply.lex.LexError:
+            self.lexer = None
 
     def clear(self):
         if self.toks is not None:
