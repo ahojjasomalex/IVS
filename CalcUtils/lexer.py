@@ -44,6 +44,7 @@ class Lexer(object):
 
     def t_error(self, t):
         print(f"Illegal character '{t.value[0]}'", file=sys.stderr)
+        self.clear()
 
     def fill(self, data):
         self.lexer.input(data)

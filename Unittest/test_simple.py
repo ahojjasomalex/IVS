@@ -1,6 +1,12 @@
 import unittest
+
+import ply.lex
+
 from CalcUtils.lexer import Lexer
 from CalcUtils.parser import Parser
+
+Parser.log = True
+Parser.write_tables = False
 
 
 class LexerSimpleTestCase(unittest.TestCase):
@@ -55,25 +61,44 @@ class LexerSimpleTestCase(unittest.TestCase):
         self.assertEqual(token_values, [5.0, '!'])
         self.assertEqual(token_types, ['NUMBER', 'FACT'])
 
+
+class LexerSimpleBadInputTestCase(unittest.TestCase):
+
     def test_simple_badchars(self):
         l = Lexer()
         data = 'aghsfdajhoiaowudiandasd0721'
         l.fill(data)
         token_values = l.get_token_values()
         token_types = l.get_token_types()
+
+        self.assertEqual(token_values, [])
+        self.assertEqual(token_types, [])
+
+    def test_simple_good_bad_chars(self):
+        l = Lexer()
+        data = '1+1-1+2aghsfdajhoiaowudiandasd0721'
+        l.fill(data)
+        token_values = l.get_token_values()
+        token_types = l.get_token_types()
+
         self.assertEqual(token_values, [])
         self.assertEqual(token_types, [])
 
 
 class ParserSimpleTestCase(unittest.TestCase):
+
     def test_simple_add(self):
         p = Parser()
         data = '3+3'
-        res = p.parser.parse(data)
+        try:
+            res = p.parser.parse(data)
+        except ply.lex.LexError:
+            res = None
         self.assertEqual(res, 6.0)
 
     def test_simple_sub(self):
         p = Parser()
+        print(p.log)
         data = '3-2'
         res = p.parser.parse(data)
         self.assertEqual(res, 1.0)
@@ -101,6 +126,12 @@ class ParserSimpleTestCase(unittest.TestCase):
         data = '3`27'
         res = p.parser.parse(data)
         self.assertEqual(res, 3.0)
+
+    def test_simple_sqrt_neg(self):
+        p = Parser()
+        data = '3`-27'
+        res = p.parser.parse(data)
+        self.assertEqual(res, None)
 
     def test_simple_pow(self):
         p = Parser()
@@ -131,6 +162,24 @@ class ParserSimpleTestCase(unittest.TestCase):
         data = '-2+(-3)'
         res = p.parser.parse(data)
         self.assertEqual(res, -5.0)
+
+    def test_simple_neg_paren(self):
+        p = Parser()
+        data = '-(2+5)'
+        res = p.parser.parse(data)
+        self.assertEqual(res, -7.0)
+
+
+class ParserSimpleBadInputsTestCase(unittest.TestCase):
+
+    def test_simple_bad_add(self):
+        p = Parser()
+        data = '.3+3'
+        try:
+            res = p.parser.parse(data)
+        except ply.lex.LexError:
+            res = None
+        self.assertEqual(res, None)
 
 
 if __name__ == '__main__':

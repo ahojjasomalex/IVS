@@ -3,6 +3,7 @@ from CalcUtils.parser import Parser
 
 
 class ParserComplexTestCase(unittest.TestCase):
+
     def test_parser_add_sub_mult_div_1(self):
         p = Parser()
         data = '5+2-6*3/6'
