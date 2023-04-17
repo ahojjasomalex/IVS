@@ -43,7 +43,7 @@ class Lexer(object):
         t.lexer.lineno += len(t.value)
 
     def t_error(self, t):
-        print(f"Illegal character '{t.value[0]}'", file=sys.stderr)
+        # print(f"Illegal character '{t.value[0]}'", file=sys.stderr)
         self.clear()
 
     def fill(self, data):

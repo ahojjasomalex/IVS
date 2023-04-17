@@ -98,7 +98,6 @@ class ParserSimpleTestCase(unittest.TestCase):
 
     def test_simple_sub(self):
         p = Parser()
-        print(p.log)
         data = '3-2'
         res = p.parser.parse(data)
         self.assertEqual(res, 1.0)

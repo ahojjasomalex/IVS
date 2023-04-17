@@ -1,4 +1,7 @@
 import sys
+
+import ply.lex
+
 from CalcUtils import parser
 
 
@@ -10,6 +13,8 @@ def main():
             try:
                 res = p.parser.parse(data)
 
+                if res is None:
+                    continue
                 if res.is_integer():
                     res = int(res)
                 else:
@@ -17,8 +22,11 @@ def main():
 
                 print(res)
 
-            except Exception as e:
-                print(e)
+            except SyntaxError as e:
+                print(e, file=sys.stderr)
+            except ply.lex.LexError as e:
+                print(e, file=sys.stderr)
+
     except KeyboardInterrupt:
         sys.exit("Program stopped by CTRL+C")
 

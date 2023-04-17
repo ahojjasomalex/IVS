@@ -1,6 +1,9 @@
 import unittest
 from CalcUtils.parser import Parser
 
+Parser.log = True
+Parser.write_tables = False
+
 
 class ParserComplexTestCase(unittest.TestCase):
 
