@@ -6,57 +6,59 @@ from CalcUtils.lexer import Lexer
 from CalcUtils.parser import Parser
 
 Parser.log = True
-Parser.write_tables = False
+Parser.write_tables = True
+Parser.optimize = False
 
 
 class LexerSimpleTestCase(unittest.TestCase):
+    
+    def setUp(self):
+        self.l = Lexer()
+        
+    def tearDown(self):
+        del self.l    
 
     def test_simple_add(self):
-        l = Lexer()
         data = '5+5'
-        l.fill(data)
-        token_values = l.get_token_values()
-        token_types = l.get_token_types()
+        self.l.fill(data)
+        token_values = self.l.get_token_values()
+        token_types = self.l.get_token_types()
 
         self.assertEqual(token_values, [5.0, '+', 5.0])
         self.assertEqual(token_types, ['NUMBER', 'PLUS', 'NUMBER'])
 
     def test_simple_sub(self):
-        l = Lexer()
         data = '5-5'
-        l.fill(data)
-        token_values = l.get_token_values()
-        token_types = l.get_token_types()
+        self.l.fill(data)
+        token_values = self.l.get_token_values()
+        token_types = self.l.get_token_types()
 
         self.assertEqual(token_values, [5.0, '-', 5.0])
         self.assertEqual(token_types, ['NUMBER', 'MINUS', 'NUMBER'])
 
     def test_simple_mult(self):
-        l = Lexer()
         data = '5*5'
-        l.fill(data)
-        token_values = l.get_token_values()
-        token_types = l.get_token_types()
+        self.l.fill(data)
+        token_values = self.l.get_token_values()
+        token_types = self.l.get_token_types()
 
         self.assertEqual(token_values, [5.0, '*', 5.0])
         self.assertEqual(token_types, ['NUMBER', 'MULT', 'NUMBER'])
 
     def test_simple_div(self):
-        l = Lexer()
         data = '5/5'
-        l.fill(data)
-        token_values = l.get_token_values()
-        token_types = l.get_token_types()
+        self.l.fill(data)
+        token_values = self.l.get_token_values()
+        token_types = self.l.get_token_types()
 
         self.assertEqual(token_values, [5.0, '/', 5.0])
         self.assertEqual(token_types, ['NUMBER', 'DIV', 'NUMBER'])
 
     def test_simple_fact(self):
-        l = Lexer()
         data = '5!'
-        l.fill(data)
-        token_values = l.get_token_values()
-        token_types = l.get_token_types()
+        self.l.fill(data)
+        token_values = self.l.get_token_values()
+        token_types = self.l.get_token_types()
 
         self.assertEqual(token_values, [5.0, '!'])
         self.assertEqual(token_types, ['NUMBER', 'FACT'])
@@ -64,22 +66,26 @@ class LexerSimpleTestCase(unittest.TestCase):
 
 class LexerSimpleBadInputTestCase(unittest.TestCase):
 
+    def setUp(self):
+        self.l = Lexer()
+
+    def tearDown(self):
+        del self.l
+
     def test_simple_badchars(self):
-        l = Lexer()
         data = 'aghsfdajhoiaowudiandasd0721'
-        l.fill(data)
-        token_values = l.get_token_values()
-        token_types = l.get_token_types()
+        self.l.fill(data)
+        token_values = self.l.get_token_values()
+        token_types = self.l.get_token_types()
 
         self.assertEqual(token_values, [])
         self.assertEqual(token_types, [])
 
     def test_simple_good_bad_chars(self):
-        l = Lexer()
         data = '1+1-1+2aghsfdajhoiaowudiandasd0721'
-        l.fill(data)
-        token_values = l.get_token_values()
-        token_types = l.get_token_types()
+        self.l.fill(data)
+        token_values = self.l.get_token_values()
+        token_types = self.l.get_token_types()
 
         self.assertEqual(token_values, [])
         self.assertEqual(token_types, [])
@@ -87,95 +93,83 @@ class LexerSimpleBadInputTestCase(unittest.TestCase):
 
 class ParserSimpleTestCase(unittest.TestCase):
 
+    def setUp(self):
+        self.p = Parser()
+
+    def tearDown(self):
+        del self.p
+
     def test_simple_add(self):
-        p = Parser()
+
         data = '3+3'
         try:
-            res = p.parser.parse(data)
+            res = self.p.parser.parse(data)
         except ply.lex.LexError:
             res = None
         self.assertEqual(res, 6.0)
 
     def test_simple_sub(self):
-        p = Parser()
         data = '3-2'
-        res = p.parser.parse(data)
-        self.assertEqual(res, 1.0)
+        self.assertEqual(self.p.parser.parse(data), 1.0)
 
     def test_simple_sub_neg(self):
-        p = Parser()
         data = '2-3'
-        res = p.parser.parse(data)
-        self.assertEqual(res, -1.0)
+        self.assertEqual(self.p.parser.parse(data), -1.0)
 
     def test_simple_mult(self):
-        p = Parser()
         data = '3*3'
-        res = p.parser.parse(data)
-        self.assertEqual(res, 9.0)
+        self.assertEqual(self.p.parser.parse(data), 9.0)
 
     def test_simple_div(self):
-        p = Parser()
         data = '3/3'
-        res = p.parser.parse(data)
-        self.assertEqual(res, 1.0)
+        self.assertEqual(self.p.parser.parse(data), 1.0)
 
     def test_simple_sqrt(self):
-        p = Parser()
         data = '3`27'
-        res = p.parser.parse(data)
-        self.assertEqual(res, 3.0)
+        self.assertEqual(self.p.parser.parse(data), 3.0)
 
     def test_simple_sqrt_neg(self):
-        p = Parser()
         data = '3`-27'
-        res = p.parser.parse(data)
-        self.assertEqual(res, None)
+        self.assertEqual(self.p.parser.parse(data), None)
 
     def test_simple_pow(self):
-        p = Parser()
         data = '3^3'
-        res = p.parser.parse(data)
-        self.assertEqual(res, 27.0)
+        self.assertEqual(self.p.parser.parse(data), 27.0)
 
     def test_simple_fact(self):
-        p = Parser()
         data = '5!'
-        res = p.parser.parse(data)
-        self.assertEqual(res, 120.0)
+        self.assertEqual(self.p.parser.parse(data), 120.0)
 
     def test_simple_fact_2(self):
-        p = Parser()
         data = '5.5!'
-        res = p.parser.parse(data)
-        self.assertEqual(res, None)
+        self.assertEqual(self.p.parser.parse(data), None)
 
     def test_simple_fact_3(self):
-        p = Parser()
         data = '(2+3)!'
-        res = p.parser.parse(data)
-        self.assertEqual(res, 120.0)
+        self.assertEqual(self.p.parser.parse(data), 120.0)
 
     def test_simple_neg_nums(self):
-        p = Parser()
         data = '-2+(-3)'
-        res = p.parser.parse(data)
-        self.assertEqual(res, -5.0)
+        self.assertEqual(self.p.parser.parse(data), -5.0)
 
     def test_simple_neg_paren(self):
-        p = Parser()
         data = '-(2+5)'
-        res = p.parser.parse(data)
-        self.assertEqual(res, -7.0)
+        self.assertEqual(self.p.parser.parse(data), -7.0)
 
 
 class ParserSimpleBadInputsTestCase(unittest.TestCase):
 
+    def setUp(self):
+        self.p = Parser()
+
+    def tearDown(self):
+        del self.p
+
     def test_simple_bad_add(self):
-        p = Parser()
+
         data = '.3+3'
         try:
-            res = p.parser.parse(data)
+            res = self.p.parser.parse(data)
         except ply.lex.LexError:
             res = None
         self.assertEqual(res, None)

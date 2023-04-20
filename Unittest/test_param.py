@@ -4,9 +4,17 @@ from parameterized import parameterized
 
 Parser.log = False
 Parser.write_tables = True
+Parser.optimize = True
 
 
 class ParametrizedTestCase(unittest.TestCase):
+
+    def setUp(self):
+        self.p = Parser()
+
+    def tearDown(self):
+        del self.p
+
     @parameterized.expand([
         ['plus', '+', [x for x in range(11)], [x for x in range(1, 11)]],
         ['minus', '-', [x for x in range(11)], [x for x in range(1, 11)]],
@@ -14,10 +22,9 @@ class ParametrizedTestCase(unittest.TestCase):
         ['div', '/', [x for x in range(11)], [x for x in range(1, 11)]]
     ])
     def test_binary_simple(self, name, op, a, b):
-        p = Parser()
         for i, j in zip(a, b):
             data = f'{i}{op}{j}'
-            res = p.parser.parse(data)
+            res = self.p.parser.parse(data)
             self.assertEqual(res, eval(data))
 
     @parameterized.expand([
@@ -27,10 +34,9 @@ class ParametrizedTestCase(unittest.TestCase):
         ['div', '/', [x for x in range(11)], [x for x in range(1, 11)]]
     ])
     def test_binary_complex(self, name, op, a, b):
-        p = Parser()
         for i, j in zip(a, b):
             data = f'{i}{op}{j}{op}{j}{i}{op}{i}.{j}'
-            res = p.parser.parse(data)
+            res = self.p.parser.parse(data)
             self.assertEqual(res, eval(data))
 
 

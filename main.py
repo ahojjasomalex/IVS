@@ -3,24 +3,40 @@ import sys
 import ply.lex
 
 from CalcUtils import parser
+import PySimpleGUI as sg
+
+layout = [[sg.Txt('' * 10)],
+          [sg.Text('', size=(15, 1), font=('Helvetica', 18),
+                   text_color='black', key='input')],
+          [sg.Txt('' * 10)],
+          [sg.ReadFormButton('c'), sg.ReadFormButton('«'), sg.ReadFormButton('^'), sg.ReadFormButton('`')],
+          [sg.ReadFormButton('7'), sg.ReadFormButton('8'), sg.ReadFormButton('9'), sg.ReadFormButton('/')],
+          [sg.ReadFormButton('4'), sg.ReadFormButton('5'), sg.ReadFormButton('6'), sg.ReadFormButton('*')],
+          [sg.ReadFormButton('1'), sg.ReadFormButton('2'), sg.ReadFormButton('3'), sg.ReadFormButton('-')],
+          [sg.ReadFormButton('.'), sg.ReadFormButton('0'), sg.ReadFormButton('='), sg.ReadFormButton('+')],
+          ]
+
+form = sg.FlexForm('CALCULATOR', default_button_element_size=(5, 2),
+                   auto_size_buttons=False, grab_anywhere=False)
+form.Layout(layout)
 
 
 def main():
     p = parser.Parser()
     try:
         while True:
-            data = str(input())
+            data = input()
             try:
-                res = p.parser.parse(data)
+                ans = p.parser.parse(data)
 
-                if res is None:
+                if ans is None:
                     continue
-                if res.is_integer():
-                    res = int(res)
+                if ans.is_integer():
+                    ans = str(int(ans))
                 else:
-                    res = round(res, 10)
+                    ans = str(round(ans, 10))
 
-                print(res)
+                print(ans)
 
             except SyntaxError as e:
                 print(e, file=sys.stderr)

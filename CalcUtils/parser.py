@@ -36,10 +36,11 @@ class Parser(object):
     tokens = Lexer.tokens
     log = False
     write_tables = True
+    optimize = True
 
     def __init__(self):
         self.lexer = Lexer()
-        self.parser = yacc.yacc(module=self, debug=False, write_tables=Parser.write_tables)
+        self.parser = yacc.yacc(module=self, debug=False, write_tables=Parser.write_tables, optimize=Parser.optimize)
 
     precedence = (
         ('left', 'PLUS', 'MINUS'),
