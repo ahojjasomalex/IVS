@@ -125,11 +125,11 @@ class ParserSimpleTestCase(unittest.TestCase):
         self.assertEqual(self.p.parser.parse(data), 1.0)
 
     def test_simple_sqrt(self):
-        data = '3`27'
+        data = '3√27'
         self.assertEqual(self.p.parser.parse(data), 3.0)
 
     def test_simple_sqrt_neg(self):
-        data = '3`-27'
+        data = '3√(-27)'
         self.assertEqual(self.p.parser.parse(data), None)
 
     def test_simple_pow(self):

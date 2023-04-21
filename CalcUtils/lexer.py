@@ -25,7 +25,7 @@ class Lexer(object):
     t_LPAREN = r'\('
     t_RPAREN = r'\)'
     t_FACT = r'\!'
-    t_SQRT = r'\`'
+    t_SQRT = r'\√'
     t_POW = r'\^'
     t_ignore = ' \t'
 
