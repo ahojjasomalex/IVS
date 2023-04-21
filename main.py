@@ -40,6 +40,8 @@ def main():
 
             except SyntaxError as e:
                 print(e, file=sys.stderr)
+            except ZeroDivisionError as e:
+                print(e, file=sys.stderr)
             except ply.lex.LexError as e:
                 print(e, file=sys.stderr)
 

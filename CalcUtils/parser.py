@@ -79,11 +79,7 @@ class Parser(object):
     @logger()
     def p_term_div(self, p):
         """term : term DIV factor"""
-        try:
-            p[0] = p[1] / p[3]
-        except ZeroDivisionError as e:
-            print(e, file=sys.stderr)
-            p[0] = None
+        p[0] = p[1] / p[3]
 
     @logger()
     def p_term_sqrt(self, p):

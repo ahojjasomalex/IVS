@@ -5,9 +5,9 @@ import ply.lex
 from CalcUtils.lexer import Lexer
 from CalcUtils.parser import Parser
 
-Parser.log = True
+Parser.log = False
 Parser.write_tables = True
-Parser.optimize = False
+Parser.optimize = True
 
 
 class LexerSimpleTestCase(unittest.TestCase):

@@ -1,8 +1,9 @@
 import unittest
 from CalcUtils.parser import Parser
 
-Parser.log = True
-Parser.write_tables = False
+Parser.log = False
+Parser.write_tables = True
+Parser.optimize = True
 
 
 class ParserComplexTestCase(unittest.TestCase):
@@ -27,7 +28,11 @@ class ParserComplexTestCase(unittest.TestCase):
 
     def test_parser_zero_div(self):
         data = '2/(2-2)'
-        self.assertEqual(self.p.parser.parse(data), None)
+        try:
+            res = self.p.parser.parse(data)
+        except ZeroDivisionError:
+            res = None
+        self.assertEqual(res, None)
 
     def test_op_precedence_1(self):
         data = '3+3*3'
