@@ -457,11 +457,11 @@ class Ui_MainWindow(object):
         self.btn_div.setText(_translate("MainWindow", "/"))
         self.btn_pow.setText(_translate("MainWindow", "^"))
         self.btn_sqrt.setText(_translate("MainWindow", "x√y"))
-        self.btn_clear.setText(_translate("MainWindow", "CE"))
+        self.btn_clear.setText(_translate("MainWindow", "AC"))
         self.btn_fact.setText(_translate("MainWindow", "!"))
         self.btn_dot.setText(_translate("MainWindow", "."))
         self.btn_umin.setText(_translate("MainWindow", "+/-"))
-        self.btn_back.setText(_translate("MainWindow", "<"))
+        self.btn_back.setText(_translate("MainWindow", "DEL"))
         self.btn_eq.setText(_translate("MainWindow", "="))
 
     def click_event_number(self):

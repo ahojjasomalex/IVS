@@ -103,7 +103,7 @@ class Parser(object):
         else:
             print(f"{to_fact} is not an integer", file=sys.stderr)
             p[0] = None
-        raise FloatingPointError
+            raise FloatingPointError
 
     @logger()
     def p_term_factor(self, p):
