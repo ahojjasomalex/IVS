@@ -17,7 +17,7 @@ def logger(level=logging.DEBUG):
         @functools.wraps(func)
         def wrapper(self, p):
             if self.__class__.log:
-                logging.debug(f"Entering func {func.__name__}")
+                logging.info(f"Entering func {func.__name__}")
             result = func(self, p)
             if self.__class__.log:
                 _p = []
