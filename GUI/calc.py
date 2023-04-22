@@ -456,7 +456,7 @@ class Ui_MainWindow(object):
         self.btn_mult.setText(_translate("MainWindow", "*"))
         self.btn_div.setText(_translate("MainWindow", "/"))
         self.btn_pow.setText(_translate("MainWindow", "^"))
-        self.btn_sqrt.setText(_translate("MainWindow", "√"))
+        self.btn_sqrt.setText(_translate("MainWindow", "x√y"))
         self.btn_clear.setText(_translate("MainWindow", "CE"))
         self.btn_fact.setText(_translate("MainWindow", "!"))
         self.btn_dot.setText(_translate("MainWindow", "."))
@@ -482,7 +482,7 @@ class Ui_MainWindow(object):
             'mult': '*',
             'div': '/',
             'pow': '^',
-            'sqrt': '2√(',
+            'sqrt': '√(',
             'lparen': '(',
             'rparen': ')',
             'dot': '.',
@@ -519,6 +519,9 @@ class Ui_MainWindow(object):
             self.scan_error = True
         except ZeroDivisionError:
             ans = 'Cant divide by 0'
+            self.scan_error = True
+        except FloatingPointError:
+            ans = 'Not an integer'
             self.scan_error = True
         self.lineEdit.setText(_translate("MainWindow", ans))
 
