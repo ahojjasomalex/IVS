@@ -2,7 +2,7 @@ import sys
 
 import ply.lex
 
-from CalcUtils import parser
+from CalcUtils.parser import Parser
 from GUI.calc import Ui_MainWindow
 from PyQt6 import QtWidgets
 
@@ -16,7 +16,7 @@ def format_data(ans):
 
 
 def main():
-    p = parser.Parser()
+    p = Parser()
     try:
         while True:
             data = input()
@@ -38,9 +38,13 @@ def main():
 
 if __name__ == "__main__":
     # main()
+    p = Parser()
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
+
+    #p.parser.parse()
+
     sys.exit(app.exec())
