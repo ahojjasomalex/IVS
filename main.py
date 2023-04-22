@@ -3,6 +3,16 @@ import sys
 import ply.lex
 
 from CalcUtils import parser
+from GUI.calc import Ui_MainWindow
+from PyQt6 import QtWidgets
+
+
+def format_data(ans):
+    if ans.is_integer():
+        ans = str(int(ans))
+    else:
+        ans = str(round(ans, 10))
+    return ans
 
 
 def main():
@@ -11,14 +21,7 @@ def main():
         while True:
             data = input()
             try:
-                ans = p.parser.parse(data)
-
-                if ans is None:
-                    continue
-                if ans.is_integer():
-                    ans = str(int(ans))
-                else:
-                    ans = str(round(ans, 10))
+                ans = format_data(p.parser.parse(data))
 
                 print(ans)
 
@@ -35,3 +38,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
