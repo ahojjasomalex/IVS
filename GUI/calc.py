@@ -402,7 +402,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Calculator"))
-        self.lineEdit.setText(_translate("MainWindow", ""))
+        # self.lineEdit.setText(_translate("MainWindow", ""))
         self.btn_lparen.setText(_translate("MainWindow", "("))
         self.btn_rparen.setText(_translate("MainWindow", ")"))
         self.btn_0.setText(_translate("MainWindow", "0"))
@@ -430,6 +430,13 @@ class Ui_MainWindow(object):
 
     def click_event(self):
         ...
+
+    def get_line_data(self):
+        return self.lineEdit
+
+    def set_line_data(self, data):
+        _translate = QtCore.QCoreApplication.translate
+        self.lineEdit.setText(_translate("MainWindow", data))
 
 
 if __name__ == "__main__":
