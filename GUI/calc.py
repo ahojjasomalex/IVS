@@ -11,6 +11,7 @@ import traceback
 
 class Ui_MainWindow(object):
     def __init__(self):
+        self.calc_performed = False
         self.menubar = None
         self.btn_eq = None
         self.btn_fact = None
@@ -466,12 +467,11 @@ class Ui_MainWindow(object):
 
     def click_event_number(self):
         _translate = QtCore.QCoreApplication.translate
-        if self.scan_error:
+        data = self.lineEdit.text()
+        if self.scan_error or (data != "" and self.calc_performed):
             data = ''
             self.scan_error = False
-        else:
-            data = self.lineEdit.text()
-
+            self.calc_performed = False
         btn_val = MainWindow.sender().objectName().strip("btn_")
         self.lineEdit.setText(_translate("MainWindow", data + btn_val))
 
@@ -492,7 +492,11 @@ class Ui_MainWindow(object):
         data = self.lineEdit.text()
         btn_name = MainWindow.sender().objectName()
         btn_val = ops[btn_name.split("_")[1]]
-        self.lineEdit.setText(_translate("MainWindow", data + btn_val))
+        if btn_name == 'btn_sqrt' and data != '' and self.calc_performed:
+            self.lineEdit.setText(_translate("MainWindow", '2'+btn_val + data + ")"))
+        else:
+            self.lineEdit.setText(_translate("MainWindow", data + btn_val))
+        self.calc_performed = False
 
     def click_event_text_format(self):
         _translate = QtCore.QCoreApplication.translate
@@ -511,6 +515,7 @@ class Ui_MainWindow(object):
             data = self.lineEdit.text()
         try:
             ans = format_data(self.parser.parser.parse(data))
+            self.calc_performed = True
         except SyntaxError:
             ans = 'Syntax error'
             self.scan_error = True
@@ -522,6 +527,9 @@ class Ui_MainWindow(object):
             self.scan_error = True
         except FloatingPointError:
             ans = 'Not an integer'
+            self.scan_error = True
+        except OverflowError:
+            ans = 'Number is too large'
             self.scan_error = True
         self.lineEdit.setText(_translate("MainWindow", ans))
 

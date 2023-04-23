@@ -35,7 +35,7 @@ class Parser(object):
 
     tokens = Lexer.tokens
     log = False
-    write_tables = True
+    write_tables = False
     optimize = True
 
     def __init__(self):
@@ -82,7 +82,7 @@ class Parser(object):
         p[0] = p[1] / p[3]
 
     @logger()
-    def p_term_sqrt(self, p):
+    def p_factor_sqrt(self, p):
         """factor : term SQRT factor"""
         if p[3] < 0:
             p[0] = None
@@ -90,13 +90,14 @@ class Parser(object):
             p[0] = p[3] ** (1 / p[1])
 
     @logger()
-    def p_term_pow(self, p):
+    def p_factor_pow(self, p):
         """factor : term POW factor"""
         p[0] = p[1] ** p[3]
 
     @logger()
-    def p_factor_fact(self, p):
-        """factor : term FACT"""
+    def p_term_fact(self, p):
+        """factor : term FACT
+                  | NUMBER FACT"""
         to_fact = p[1]
         if to_fact.is_integer():
             p[0] = float(factorial(int(p[1])))
