@@ -425,6 +425,9 @@ class Ui_MainWindow(object):
         self.btn_back.clicked.connect(self.click_event_text_format)
         self.btn_eq.clicked.connect(self.click_event_calc)
 
+        #   keyPressEvents
+        self.centralwidget.keyPressEvent = self.keyPressEvent
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -549,6 +552,14 @@ class Ui_MainWindow(object):
             self.scan_error = True
         self.lineEdit.setText(_translate("MainWindow", ans))
 
+    #   calculate when enter/return pressed
+    def keyPressEvent(self, event):
+        _translate = QtCore.QCoreApplication.translate
+        print(QtCore.Qt.Key.Key_Enter)
+        print(QtCore.Qt.Key.Key_Return)
+        print(event.key())
+        if event.key() in (QtCore.Qt.Key.Key_Enter, QtCore.Qt.Key.Key_Return):
+            self.click_event_calc()
 
 def format_data(ans):
     try:
