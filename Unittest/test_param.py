@@ -3,7 +3,7 @@ from CalcUtils.parser import Parser
 from parameterized import parameterized
 
 Parser.log = False
-Parser.write_tables = True
+Parser.write_tables = False
 Parser.optimize = True
 
 
@@ -18,7 +18,7 @@ class ParametrizedTestCase(unittest.TestCase):
     @parameterized.expand([
         ['plus', '+', [x for x in range(11)], [x for x in range(1, 11)]],
         ['minus', '-', [x for x in range(11)], [x for x in range(1, 11)]],
-        ['tim', '*', [x for x in range(11)], [x for x in range(1, 11)]],
+        ['mult', '*', [x for x in range(11)], [x for x in range(1, 11)]],
         ['div', '/', [x for x in range(11)], [x for x in range(1, 11)]]
     ])
     def test_binary_simple(self, name, op, a, b):
@@ -30,7 +30,7 @@ class ParametrizedTestCase(unittest.TestCase):
     @parameterized.expand([
         ['plus', '+', [x for x in range(11)], [x for x in range(1, 11)]],
         ['minus', '-', [x for x in range(11)], [x for x in range(1, 11)]],
-        ['tim', '*', [x for x in range(11)], [x for x in range(1, 11)]],
+        ['mult', '*', [x for x in range(11)], [x for x in range(1, 11)]],
         ['div', '/', [x for x in range(11)], [x for x in range(1, 11)]]
     ])
     def test_binary_complex(self, name, op, a, b):

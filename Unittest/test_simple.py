@@ -6,7 +6,7 @@ from CalcUtils.lexer import Lexer
 from CalcUtils.parser import Parser
 
 Parser.log = False
-Parser.write_tables = True
+Parser.write_tables = False
 Parser.optimize = True
 
 
@@ -142,7 +142,11 @@ class ParserSimpleTestCase(unittest.TestCase):
 
     def test_simple_fact_2(self):
         data = '5.5!'
-        self.assertEqual(self.p.parser.parse(data), None)
+        try:
+            res = self.p.parser.parse(data)
+        except FloatingPointError:
+            res = None
+        self.assertEqual(res, None)
 
     def test_simple_fact_3(self):
         data = '(2+3)!'

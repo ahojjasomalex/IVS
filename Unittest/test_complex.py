@@ -1,8 +1,9 @@
 import unittest
 from CalcUtils.parser import Parser
+from parameterized import parameterized
 
 Parser.log = False
-Parser.write_tables = True
+Parser.write_tables = False
 Parser.optimize = True
 
 
@@ -53,6 +54,26 @@ class ParserComplexTestCase(unittest.TestCase):
     def test_frenzy_1(self):
         data = '3+3*3+(6-1)!/8+2^4/(2√16)+4!-3*5+2'
         self.assertEqual(self.p.parser.parse(data), 42)
+
+
+class ParserAsociativityTestCase(unittest.TestCase):
+
+    def setUp(self):
+        self.p = Parser()
+
+    def tearDown(self):
+        del self.p
+
+    @parameterized.expand([
+        ['plus', ['1+2+3', '3+2+1', '2+1+3', '3+1+2'], [6]*4],
+        ['minus', ['1-2-3', '3-2-1', '2-1-3', '3-1-2'], [-4, 0, -2, 0]],
+        ['mult', ['1*2*4*3', '3*4*2*1', '4*2*1*3', '3*1*2*4'], [24]*4],
+        ['div', ['1/2/4/3', '3/4/2/1', '4/2/1/3', '3/1/2/4'], [eval('1/2/4/3'), eval('3/4/2/1'), eval('4/2/1/3'), eval('3/1/2/4')]]
+    ])
+    def test_asoc(self, name, data, res):
+        for d, r in zip(data, res):
+            p_res = self.p.parser.parse(d)
+            self.assertEqual(p_res, r)
 
 
 if __name__ == "__main__":
