@@ -83,7 +83,7 @@ class Parser(object):
 
     @logger()
     def p_factor_sqrt(self, p):
-        """factor : term SQRT factor"""
+        """factor : factor SQRT factor"""
         if p[3] < 0:
             p[0] = None
         else:
@@ -91,7 +91,7 @@ class Parser(object):
 
     @logger()
     def p_factor_pow(self, p):
-        """factor : term POW factor"""
+        """factor : factor POW factor"""
         p[0] = p[1] ** p[3]
 
     @logger()
@@ -102,7 +102,7 @@ class Parser(object):
         if to_fact.is_integer():
             p[0] = float(factorial(int(p[1])))
         else:
-            print(f"{to_fact} is not an integer", file=sys.stderr)
+            # print(f"{to_fact} is not an integer", file=sys.stderr)
             p[0] = None
             raise FloatingPointError
 
