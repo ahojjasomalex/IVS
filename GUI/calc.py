@@ -8,6 +8,7 @@ import ply
 from PyQt6 import QtCore, QtGui, QtWidgets
 from CalcUtils.parser import Parser
 import traceback
+import sys
 
 class Ui_MainWindow(object):
     def __init__(self):
@@ -426,12 +427,12 @@ class Ui_MainWindow(object):
         self.btn_rparen.clicked.connect(self.click_event_op)
         self.btn_fact.clicked.connect(self.click_event_op)
         self.btn_dot.clicked.connect(self.click_event_op)
+        self.btn_umin.clicked.connect(self.click_event_op)
 
         #   click events for text formatting
         self.btn_clear.clicked.connect(self.click_event_text_format)
         self.btn_back.clicked.connect(self.click_event_text_format)
         self.btn_eq.clicked.connect(self.click_event_calc)
-
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -486,14 +487,37 @@ class Ui_MainWindow(object):
             'lparen': '(',
             'rparen': ')',
             'dot': '.',
-            'fact': '!'
+            'fact': '!',
+            'umin': ''
         }
         _translate = QtCore.QCoreApplication.translate
         data = self.lineEdit.text()
         btn_name = MainWindow.sender().objectName()
         btn_val = ops[btn_name.split("_")[1]]
-        if btn_name == 'btn_sqrt' and data != '' and self.calc_performed:
-            self.lineEdit.setText(_translate("MainWindow", '2'+btn_val + data + ")"))
+        # handle specific operators differently
+        #  '√' button
+        if btn_name == 'btn_sqrt':
+            if data != '' and self.calc_performed:
+                self.lineEdit.setText(_translate("MainWindow", '2' + btn_val + data + ")"))
+            else:
+                self.lineEdit.setText(_translate("MainWindow", data + btn_val))
+            if data == '':
+                self.lineEdit.setText(_translate("MainWindow", '2' + btn_val + data))
+        #  '(' button
+        elif btn_name == 'btn_lparen' and self.calc_performed:
+            self.lineEdit.setText(_translate("MainWindow", data + "*("))
+
+        #  '+/-' button
+        elif btn_name == 'btn_umin':
+            try:
+                if data[0] == '-':
+                    # result is negative so flip to positive
+                    self.lineEdit.setText(_translate("MainWindow", data[1:]))
+                else:
+                    # result is positive so add button value
+                    self.lineEdit.setText(_translate("MainWindow", '-' + data))
+            except IndexError:
+                pass
         else:
             self.lineEdit.setText(_translate("MainWindow", data + btn_val))
         self.calc_performed = False
@@ -504,6 +528,7 @@ class Ui_MainWindow(object):
         btn_val = MainWindow.sender().objectName().split("_")[1]
         if btn_val == 'clear':
             self.lineEdit.setText(_translate("MainWindow", ""))
+            self.calc_performed = False
         if btn_val == 'back':
             self.lineEdit.setText(_translate("MainWindow", data[:-1]))
 
@@ -547,12 +572,10 @@ def format_data(ans):
 
 def excepthook(exc_type, exc_value, exc_tb):
     tb = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
-    print("error catched!:")
-    print("error message:\n", tb)
+    print(tb, file=sys.stderr)
 
 
 if __name__ == "__main__":
-    import sys
     sys.excepthook = excepthook
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
