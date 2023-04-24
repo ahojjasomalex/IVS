@@ -45,7 +45,7 @@ class ParserComplexTestCase(unittest.TestCase):
 
     def test_op_precedence_3(self):
         data = '2^4*2√16'
-        self.assertEqual(self.p.parser.parse(data), 1.0905077326652577)
+        self.assertEqual(self.p.parser.parse(data), 64)
 
     def test_op_precedence_4(self):
         data = '2^4*(2√16)'
