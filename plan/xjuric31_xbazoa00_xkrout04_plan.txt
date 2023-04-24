@@ -1,0 +1,26 @@
+Stanovené termíny:
+
+19. 3. 2023 — ujasnění specifikace
+26. 3. 2023 — průběžná kontrola vývoje sofware
+2. 4. 2023 — průběžná kontrola vývoje software + testy komponent
+9. 4. 2023 — průběžná kontrola vývoje software + integrace komponent
+16. 4. 2023 — průběžná kontrola vývoje software + testování funkčnosti celku
+23. 4. 2023 — kompletní odladění všech bugů v programu
+24. 4. 2023 — konečená revize projektu
+26. 4. 2023 — odevzdání projektu
+
+Přidělení úkolů na projektu jednotlivým řešitelům:
+
+Backend programu — Alex Bažo
+Frontend (GUI) programu, profiling — Jan Kroutil
+Testování, dokumentace, řízení termínů — Richard Juřica
+
+Zvolené komunikační kanály pro komunikaci v týmu a stanovená pravidla pro komunikaci:
+
+Discord — používáme vlastní server určený přímo na komunikace pro projekt do IVS
+E-mail — školní e-mail
+Pravidla — pravidelné kontrolování komunikačních kanálů, odpovídáme maximálně následující den
+
+Zvolený systém pro správu verzí a hosting + informaci, jak do repozitáře mohou nahlédnout vyučující/cvičící (viz níže).
+
+GitHub — pro náhled vyučujících jsme udělili oprávnění pro uživatele ivskontrola
