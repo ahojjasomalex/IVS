@@ -1,5 +1,5 @@
 import unittest
-from CalcUtils.parser import Parser
+from parser import Parser
 from parameterized import parameterized
 
 Parser.log = False

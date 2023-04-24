@@ -2,8 +2,8 @@ import unittest
 
 import ply.lex
 
-from CalcUtils.lexer import Lexer
-from CalcUtils.parser import Parser
+from lexer import Lexer
+from parser import Parser
 
 Parser.log = False
 Parser.write_tables = False

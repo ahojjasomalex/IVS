@@ -1,16 +1,14 @@
 import functools
-import sys
 import ply.yacc as yacc
-from .lexer import Lexer
+from lexer import Lexer
 from math import factorial
 import logging
 
-logging.basicConfig(filename='logger.log', level=logging.DEBUG)
+# logging.basicConfig(filename='logger.log', level=logging.DEBUG)
 
 
 def logger(level=logging.DEBUG):
-    """
-    Decorator factory for logging
+    """! Decorator factory for logging
     :param level: Logging level
     """
     def decorator(func):
@@ -35,7 +33,7 @@ class Parser(object):
 
     tokens = Lexer.tokens
     log = False
-    write_tables = False
+    write_tables = True
     optimize = True
 
     def __init__(self):
@@ -51,53 +49,50 @@ class Parser(object):
 
     )
 
-    @logger()
+    # @logger()
     def p_expr_uminus(self, p):
-        """expression : MINUS expression %prec UMINUS"""
+
         p[0] = -p[2]
 
-    @logger()
+    # @logger()
     def p_expression_plus(self, p):
-        """expression : expression PLUS term"""
+
         p[0] = p[1] + p[3]
 
-    @logger()
+    # @logger()
     def p_expression_minus(self, p):
-        """expression : expression MINUS term"""
+
         p[0] = p[1] - p[3]
 
-    @logger()
+    # @logger()
     def p_expression_term(self, p):
-        """expression : term"""
+
         p[0] = p[1]
 
-    @logger()
+    # @logger()
     def p_term_mult(self, p):
-        """term : term MULT factor"""
+
         p[0] = p[1] * p[3]
 
-    @logger()
+    # @logger()
     def p_term_div(self, p):
-        """term : term DIV factor"""
+
         p[0] = p[1] / p[3]
 
-    @logger()
+    # @logger()
     def p_factor_sqrt(self, p):
-        """factor : factor SQRT factor"""
+
         if p[3] < 0:
             p[0] = None
         else:
             p[0] = p[3] ** (1 / p[1])
 
-    @logger()
+    # @logger()
     def p_factor_pow(self, p):
-        """factor : factor POW factor"""
         p[0] = p[1] ** p[3]
 
-    @logger()
+    # @logger()
     def p_term_fact(self, p):
-        """factor : term FACT
-                  | NUMBER FACT"""
         to_fact = p[1]
         if to_fact.is_integer():
             p[0] = float(factorial(int(p[1])))
@@ -106,19 +101,17 @@ class Parser(object):
             p[0] = None
             raise FloatingPointError
 
-    @logger()
+    # @logger()
     def p_term_factor(self, p):
-        """term : factor"""
+
         p[0] = p[1]
 
-    @logger()
+    # @logger()
     def p_factor_num(self, p):
-        """factor : NUMBER"""
         p[0] = p[1]
 
-    @logger()
+    # @logger()
     def p_factor_expr(self, p):
-        """factor : LPAREN expression RPAREN"""
         p[0] = p[2]
 
     def p_error(self, p):
