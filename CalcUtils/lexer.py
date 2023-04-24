@@ -1,4 +1,3 @@
-import sys
 
 import ply.lex
 import ply.lex as lex
