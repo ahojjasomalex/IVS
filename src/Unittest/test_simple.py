@@ -100,12 +100,8 @@ class ParserSimpleTestCase(unittest.TestCase):
         del self.p
 
     def test_simple_add(self):
-
         data = '3+3'
-        try:
-            res = self.p.parser.parse(data)
-        except ply.lex.LexError:
-            res = None
+        res = self.p.parser.parse(data)
         self.assertEqual(res, 6.0)
 
     def test_simple_sub(self):
