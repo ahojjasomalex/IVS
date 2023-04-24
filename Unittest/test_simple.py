@@ -170,11 +170,18 @@ class ParserSimpleBadInputsTestCase(unittest.TestCase):
         del self.p
 
     def test_simple_bad_add(self):
-
         data = '.3+3'
         try:
             res = self.p.parser.parse(data)
         except ply.lex.LexError:
+            res = None
+        self.assertEqual(res, None)
+
+    def test_simple_empty(self):
+        data = ''
+        try:
+            res = self.p.parser.parse(data)
+        except SyntaxError:
             res = None
         self.assertEqual(res, None)
 
