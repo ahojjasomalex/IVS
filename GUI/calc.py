@@ -452,7 +452,7 @@ class Ui_MainWindow(object):
         self.btn_mult.setText(_translate("MainWindow", "*"))
         self.btn_div.setText(_translate("MainWindow", "/"))
         self.btn_pow.setText(_translate("MainWindow", "^"))
-        self.btn_sqrt.setText(_translate("MainWindow", "x√y"))
+        self.btn_sqrt.setText(_translate("MainWindow", "y√x"))
         self.btn_clear.setText(_translate("MainWindow", "AC"))
         self.btn_fact.setText(_translate("MainWindow", "!"))
         self.btn_dot.setText(_translate("MainWindow", "."))
@@ -469,6 +469,7 @@ class Ui_MainWindow(object):
             self.calc_performed = False
         btn_val = MainWindow.sender().objectName().strip("btn_")
         self.lineEdit.setText(_translate("MainWindow", data + btn_val))
+
 
     def click_event_op(self):
         ops = {
@@ -500,9 +501,10 @@ class Ui_MainWindow(object):
         #  '(' button
         elif btn_name == 'btn_lparen' and self.calc_performed:
             self.lineEdit.setText(_translate("MainWindow", data + "*("))
-
+            self.btn_sqrt.setText(_translate("MainWindow", "y√x"))
         #  '+/-' button
         elif btn_name == 'btn_umin':
+            self.btn_sqrt.setText(_translate("MainWindow", "y√x"))
             try:
                 if data[0] == '-':
                     # result is negative so flip to positive
@@ -514,6 +516,7 @@ class Ui_MainWindow(object):
                 pass
         else:
             self.lineEdit.setText(_translate("MainWindow", data + btn_val))
+            self.btn_sqrt.setText(_translate("MainWindow", "y√x"))
         self.calc_performed = False
 
     def click_event_text_format(self):
@@ -522,6 +525,7 @@ class Ui_MainWindow(object):
         btn_val = MainWindow.sender().objectName().split("_")[1]
         if btn_val == 'clear':
             self.lineEdit.setText(_translate("MainWindow", ""))
+            self.btn_sqrt.setText(_translate("MainWindow", "y√x"))
             self.calc_performed = False
         if btn_val == 'back':
             self.lineEdit.setText(_translate("MainWindow", data[:-1]))
@@ -534,7 +538,6 @@ class Ui_MainWindow(object):
             data = self.lineEdit.text()
         try:
             ans = format_data(self.parser.parser.parse(data))
-            self.calc_performed = True
         except SyntaxError:
             ans = 'Syntax error'
             self.scan_error = True
@@ -550,7 +553,10 @@ class Ui_MainWindow(object):
         except OverflowError:
             ans = 'Number is too large'
             self.scan_error = True
+        self.calc_performed = True
         self.lineEdit.setText(_translate("MainWindow", ans))
+        if not self.scan_error:
+            self.btn_sqrt.setText(_translate("MainWindow", "2√x"))
 
     #   calculate when enter/return pressed
     def keyPressEvent(self, event):
