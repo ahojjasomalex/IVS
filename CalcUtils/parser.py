@@ -122,10 +122,8 @@ class Parser(object):
         p[0] = p[2]
 
     def p_error(self, p):
-        print("Syntax error", file=sys.stderr)
-
         if not p:
-            return None
+            raise SyntaxError
 
         while True:
             tok = self.parser.token()
