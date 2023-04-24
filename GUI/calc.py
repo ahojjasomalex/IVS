@@ -561,9 +561,6 @@ class Ui_MainWindow(object):
     #   calculate when enter/return pressed
     def keyPressEvent(self, event):
         _translate = QtCore.QCoreApplication.translate
-        print(QtCore.Qt.Key.Key_Enter)
-        print(QtCore.Qt.Key.Key_Return)
-        print(event.key())
         if event.key() in (QtCore.Qt.Key.Key_Enter, QtCore.Qt.Key.Key_Return):
             self.click_event_calc()
 
