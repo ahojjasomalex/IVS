@@ -120,14 +120,6 @@ class ParserSimpleTestCase(unittest.TestCase):
         data = '3/3'
         self.assertEqual(self.p.parser.parse(data), 1.0)
 
-    def test_simple_sqrt(self):
-        data = '3√27'
-        self.assertEqual(self.p.parser.parse(data), 3.0)
-
-    def test_simple_sqrt_neg(self):
-        data = '3√(-27)'
-        self.assertEqual(self.p.parser.parse(data), None)
-
     def test_simple_pow(self):
         data = '3^3'
         self.assertEqual(self.p.parser.parse(data), 27.0)
@@ -155,6 +147,114 @@ class ParserSimpleTestCase(unittest.TestCase):
     def test_simple_neg_paren(self):
         data = '-(2+5)'
         self.assertEqual(self.p.parser.parse(data), -7.0)
+
+
+class ParserSimpleSqrtTestCase(unittest.TestCase):
+    def setUp(self):
+        self.p = Parser()
+
+    def tearDown(self):
+        del self.p
+
+    def test_simple_sqrt_pos_odd_base_pos_n(self):
+        data = '3√27'
+        self.assertEqual(self.p.parser.parse(data), 3.0)
+
+    def test_simple_sqrt_pos_odd_base_neg_n(self):
+        data = '3√(-27)'
+        self.assertEqual(self.p.parser.parse(data), -3)
+
+    def test_simple_sqrt_neg_odd_base_pos_n(self):
+        data = '(-3)√27'
+        self.assertEqual(round(self.p.parser.parse(data), 10), round(1/3, 10))
+
+    def test_simple_sqrt_neg_odd_base_neg_n(self):
+        data = '(-3)√(-27)'
+        self.assertEqual(round(self.p.parser.parse(data), 10), round(-1/3, 10))
+
+    def test_simple_sqrt_neg__odd_base_pos_n(self):
+        data = '-3√27'
+        self.assertEqual(self.p.parser.parse(data), -3)
+
+    def test_simple_sqrt_neg__odd_base_neg_n(self):
+        data = '-3√(-27)'
+        self.assertEqual(self.p.parser.parse(data), 3)
+
+    def test_simple_sqrt_pos_even_base_pos_n(self):
+        data = '2√16'
+        self.assertEqual(self.p.parser.parse(data), 4)
+
+    def test_simple_sqrt_pos_even_base_neg_n(self):
+        data = '2√(-16)'
+        try:
+            res = self.p.parser.parse(data)
+        except ValueError:
+            res = None
+        self.assertEqual(res, None)
+
+    def test_simple_sqrt_neg_even_base_pos_n(self):
+        data = '(-2)√16'
+        self.assertEqual(self.p.parser.parse(data), 1/4)
+
+    def test_simple_sqrt_neg_even_base_neg_n(self):
+        data = '(-2)√(-16)'
+        try:
+            res = self.p.parser.parse(data)
+        except ValueError:
+            res = None
+        self.assertEqual(res, None)
+
+    def test_simple_sqrt_neg__even_base_pos_n(self):
+        data = '-2√16'
+        self.assertEqual(self.p.parser.parse(data), -4)
+
+    def test_simple_sqrt_neg__even_base_neg_n(self):
+        data = '-2√(-16)'
+        try:
+            res = self.p.parser.parse(data)
+        except ValueError:
+            res = None
+        self.assertEqual(res, None)
+
+    def test_simple_sqrt_float_base_pos_n(self):
+        data = '2.1√(16)'
+        try:
+            res = self.p.parser.parse(data)
+        except ValueError:
+            res = None
+        self.assertEqual(round(res, 10), 3.7444709698)
+
+    def test_simple_sqrt_float_base_neg_n(self):
+        data = '2.1√(-16)'
+        try:
+            res = self.p.parser.parse(data)
+        except ValueError:
+            res = None
+        self.assertEqual(res, 3.7444709698)
+
+    def test_simple_sqrt_neg_base(self):
+        data = '-2√(-16)'
+        try:
+            res = self.p.parser.parse(data)
+        except ValueError:
+            res = None
+        self.assertEqual(res, None)
+
+    def test_simple_sqrt_neg_base_2(self):
+        data = '-2√(16)'
+        try:
+            res = self.p.parser.parse(data)
+        except ValueError:
+            res = None
+        self.assertEqual(res, -4)
+
+    def test_simple_sqrt_neg_base_3(self):
+        data = '(-2)√(16)'
+        try:
+            res = self.p.parser.parse(data)
+        except ValueError:
+            res = None
+        self.assertEqual(res, 1/4)
 
 
 class ParserSimpleBadInputsTestCase(unittest.TestCase):
