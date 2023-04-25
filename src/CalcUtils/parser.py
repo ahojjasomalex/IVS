@@ -15,7 +15,7 @@
 
 import functools
 import ply.yacc as yacc
-from lexer import Lexer
+from .lexer import Lexer
 from math import factorial
 import logging
 
@@ -165,7 +165,7 @@ class Parser(object):
         if p[1] < 0:  # number is integer, save '-' operator
             p[0] = - round(abs(p[1] ** p[3]), 10)
         else:
-            p[0] = p[1] ** p[3]
+            p[0] = abs(p[1] ** p[3])
 
     ##
     # @brief grammar rules for reducing factorial operator
