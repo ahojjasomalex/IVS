@@ -1,17 +1,20 @@
 #!/usr/bin/python
+##
+# @package src.profiling
+# profiling.py is module that calculates standard deviation using src.CalcUtils package
+#
+
 from CalcUtils.parser import Parser
 import random
 
+#   instantiate Parser class
 p = Parser()
 
+
 def generate_integers(N):
-    """
-    This function generates a list of N random integers between 0 and 999.
-
-    @param N The parameter N is an integer that represents the number of integers to be generated.
-
-    @return The function `generate_integers(N)` returns a list of `N` randomly generated integers between 0 and 999
-    (inclusive) as strings.
+    """!@brief Function generates list of N integers with values <0, 999>
+    @param N Number of integers to generate
+    @return: List of N random integers
     """
     numbers = []
     random.seed()
@@ -21,18 +24,12 @@ def generate_integers(N):
 
 
 def summarize(numbers: list, op='+'):
-    """
-    The function takes a list of numbers and an operator as input, concatenates them into a string, evaluates the string
-    using a parser, and returns the result as a string.
-
-    @param numbers The "numbers" parameter is a list of numbers that we want to summarize.
-    @param op The "op" parameter is a string that represents the mathematical operation to be performed on the list of
-    numbers. The default value is "+", which means that the function will perform addition on the list of numbers. However,
-    the user can also specify other operations such as "-", "*", "/", etc.
-
-    @return a string that represents the result of performing the specified operation (default is addition) on the numbers
-    in the input list. The string is obtained by concatenating the numbers in the list with the specified operator, and then
-    parsing the resulting string using the `parser` module.
+    """!@brief The function takes a list of numbers and an operator as input, concatenates them into a string, evaluates
+    the string using a parser and returns the result as a string
+    @param numbers List of numbers that we want to summarize.
+    @param op String that represents the mathematical operation to be performed on the list of numbers, default value is "+",
+    can be changed by providing explicit op parameter
+    @return String that represents the result of performing the specified operation on the numbers list by parser class
     """
     number_string = ''
     for i in numbers:
@@ -41,32 +38,25 @@ def summarize(numbers: list, op='+'):
     return res
 
 
-def arithmetic_mean(input_numbers):
-    """! The function calculates the arithmetic mean of a list of input numbers.
-
-    @param input_numbers The input_numbers parameter is a list of numbers for which we want to calculate the arithmetic
-    mean.
-
-    @return The function `arithmetic_mean` is returning the arithmetic mean of the input numbers. It first calculates the
-    sum of the input numbers using the `summarize` function (which is not defined in the code snippet provided), then
-    divides the sum by the number of input numbers to get the mean. The mean is returned as a `float` value.
+def arithmetic_mean(numbers):
+    """!@brief The function calculates the arithmetic mean of a list of input numbers
+    @param numbers List of input numbers to calculate mean from
+    @return Float, arithmetic mean of a list
     """
-    res = summarize(input_numbers)
-    N = len(input_numbers)
+    res = summarize(numbers)
+    N = len(numbers)
     return p.parser.parse(f"{res}/{N}")
 
 
-def standard_deviation(input_numbers):
-    """! The function calculates the standard deviation of a list of input numbers using the formula for sample standard
-    deviation.
-
-    @param input_numbers The input_numbers parameter is a list of numbers for which we want to calculate the standard
-    deviation.
-    @return The function `standard_deviation` returns the calculated standard deviation of the input numbers
+def standard_deviation(numbers):
+    """!@brief The function calculates the standard deviation of a list of input numbers using the formula for sample standard
+    deviation
+    @param numbers List of numbers from which to calculate standard deviation
+    @return Float, standard deviation of the input numbers
     """
-    sum_x_pow_2 = summarize(input_numbers, op='^2+')
-    a_mean = arithmetic_mean(input_numbers)
-    N = len(input_numbers)
+    sum_x_pow_2 = summarize(numbers, op='^2+')
+    a_mean = arithmetic_mean(numbers)
+    N = len(numbers)
     res = p.parser.parse(f"2√(({sum_x_pow_2} - {N} * {a_mean}^2) / ({N} - 1))")
     return res
 
