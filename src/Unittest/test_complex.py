@@ -72,6 +72,10 @@ class ParserComplexTestCase(unittest.TestCase):
         data = '(-3)√(27)'
         self.assertEqual(round(self.p.parser.parse(data), 10), round(1/3, 10))
 
+    def test_sqrt_decimals(self):
+        data = '2.1√(-27)'
+        self.assertEqual(round(self.p.parser.parse(data), 9), 4.803986657)
+
 ##
 # @class ParserAssociativityTestCase
 # TestCase class for operation associativity tests for Parser
