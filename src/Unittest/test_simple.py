@@ -1,22 +1,33 @@
+##
+# @package src.Unittest package with tests for src.CalcUtils mathematical library
+# @authors Alex Bazo, Richard Jurica, Jan Kroutil
+#
+# @package src.Unittest.test_simple
+# test_simple.py contains simple tests for src.CalcUtils package
+#
+
 import unittest
-
 import ply.lex
-
 from lexer import Lexer
 from parser import Parser
 
+# Setting up Parser class variables for testing
 Parser.log = False
 Parser.write_tables = False
 Parser.optimize = True
 
 
+##
+# @class LexerSimpleTestCase
+# TestCase class for simple input tests for Lexer
+#
 class LexerSimpleTestCase(unittest.TestCase):
-    
+
     def setUp(self):
         self.l = Lexer()
-        
+
     def tearDown(self):
-        del self.l    
+        del self.l
 
     def test_simple_add(self):
         data = '5+5'
@@ -64,6 +75,10 @@ class LexerSimpleTestCase(unittest.TestCase):
         self.assertEqual(token_types, ['NUMBER', 'FACT'])
 
 
+##
+# @class LexerSimpleBadInputTestCase
+# TestCase class for simple input tests with bad inputs for Lexer
+#
 class LexerSimpleBadInputTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -91,6 +106,10 @@ class LexerSimpleBadInputTestCase(unittest.TestCase):
         self.assertEqual(token_types, [])
 
 
+##
+# @class ParserSimpleTestCase
+# TestCase class for simple input tests for Parser
+#
 class ParserSimpleTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -149,6 +168,10 @@ class ParserSimpleTestCase(unittest.TestCase):
         self.assertEqual(self.p.parser.parse(data), -7.0)
 
 
+##
+# @class ParserSimpleSqrtTestCase
+# TestCase class for simple input tests for root function in Parser
+#
 class ParserSimpleSqrtTestCase(unittest.TestCase):
     def setUp(self):
         self.p = Parser()
@@ -166,11 +189,11 @@ class ParserSimpleSqrtTestCase(unittest.TestCase):
 
     def test_simple_sqrt_neg_odd_base_pos_n(self):
         data = '(-3)√27'
-        self.assertEqual(round(self.p.parser.parse(data), 10), round(1/3, 10))
+        self.assertEqual(round(self.p.parser.parse(data), 10), round(1 / 3, 10))
 
     def test_simple_sqrt_neg_odd_base_neg_n(self):
         data = '(-3)√(-27)'
-        self.assertEqual(round(self.p.parser.parse(data), 10), round(-1/3, 10))
+        self.assertEqual(round(self.p.parser.parse(data), 10), round(-1 / 3, 10))
 
     def test_simple_sqrt_neg__odd_base_pos_n(self):
         data = '-3√27'
@@ -194,7 +217,7 @@ class ParserSimpleSqrtTestCase(unittest.TestCase):
 
     def test_simple_sqrt_neg_even_base_pos_n(self):
         data = '(-2)√16'
-        self.assertEqual(self.p.parser.parse(data), 1/4)
+        self.assertEqual(self.p.parser.parse(data), 1 / 4)
 
     def test_simple_sqrt_neg_even_base_neg_n(self):
         data = '(-2)√(-16)'
@@ -254,9 +277,13 @@ class ParserSimpleSqrtTestCase(unittest.TestCase):
             res = self.p.parser.parse(data)
         except ValueError:
             res = None
-        self.assertEqual(res, 1/4)
+        self.assertEqual(res, 1 / 4)
 
 
+##
+# @class ParserSimpleBadInputsTestCase
+# TestCase class for simple input tests with bad inputs for Parser
+#
 class ParserSimpleBadInputsTestCase(unittest.TestCase):
 
     def setUp(self):

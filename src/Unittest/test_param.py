@@ -1,12 +1,22 @@
+##
+# @package src.Unittest.test_param
+# test_param.py contains parametrized tests for src.CalcUtils.parser module
+#
+
 import unittest
 from parser import Parser
 from parameterized import parameterized
 
+# Setting up Parser class variables for testing
 Parser.log = False
 Parser.write_tables = False
 Parser.optimize = True
 
 
+##
+# @class ParametrizedTestCase
+# TestCase class parametrized tests for Parser
+#
 class ParametrizedTestCase(unittest.TestCase):
 
     def setUp(self):

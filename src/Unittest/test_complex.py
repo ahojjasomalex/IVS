@@ -1,3 +1,8 @@
+##
+# @package src.Unittest.test_complex
+# test_complex.py contains complex tests for src.CalcUtils.parser module
+#
+
 import unittest
 from parser import Parser
 from parameterized import parameterized
@@ -7,6 +12,10 @@ Parser.write_tables = False
 Parser.optimize = True
 
 
+##
+# @class ParserComplexTestCase
+# TestCase class for complex tests for Parser
+#
 class ParserComplexTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -63,7 +72,11 @@ class ParserComplexTestCase(unittest.TestCase):
         data = '(-3)√(27)'
         self.assertEqual(round(self.p.parser.parse(data), 10), round(1/3, 10))
 
-class ParserAsociativityTestCase(unittest.TestCase):
+##
+# @class ParserAssociativityTestCase
+# TestCase class for operation associativity tests for Parser
+#
+class ParserAssociativityTestCase(unittest.TestCase):
 
     def setUp(self):
         self.p = Parser()
@@ -72,10 +85,11 @@ class ParserAsociativityTestCase(unittest.TestCase):
         del self.p
 
     @parameterized.expand([
-        ['plus', ['1+2+3', '3+2+1', '2+1+3', '3+1+2'], [6]*4],
+        ['plus', ['1+2+3', '3+2+1', '2+1+3', '3+1+2'], [6] * 4],
         ['minus', ['1-2-3', '3-2-1', '2-1-3', '3-1-2'], [-4, 0, -2, 0]],
-        ['mult', ['1*2*4*3', '3*4*2*1', '4*2*1*3', '3*1*2*4'], [24]*4],
-        ['div', ['1/2/4/3', '3/4/2/1', '4/2/1/3', '3/1/2/4'], [eval('1/2/4/3'), eval('3/4/2/1'), eval('4/2/1/3'), eval('3/1/2/4')]]
+        ['mult', ['1*2*4*3', '3*4*2*1', '4*2*1*3', '3*1*2*4'], [24] * 4],
+        ['div', ['1/2/4/3', '3/4/2/1', '4/2/1/3', '3/1/2/4'],
+         [eval('1/2/4/3'), eval('3/4/2/1'), eval('4/2/1/3'), eval('3/1/2/4')]]
     ])
     def test_asoc(self, name, data, res):
         for d, r in zip(data, res):
