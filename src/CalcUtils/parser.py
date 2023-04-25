@@ -162,10 +162,10 @@ class Parser(object):
     # @logger()
     def p_factor_pow(self, p):
         """factor : factor POW factor"""
-        if p[1].is_integer():  # number is integer, save '-' operator
+        if p[1] < 0:  # number is integer, save '-' operator
             p[0] = - round(abs(p[1] ** p[3]), 10)
         else:
-            p[0] = round(abs(p[1] ** p[3]), 10)
+            p[0] = p[1] ** p[3]
 
     ##
     # @brief grammar rules for reducing factorial operator
