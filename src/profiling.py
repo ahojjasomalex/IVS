@@ -5,6 +5,7 @@
 #
 
 from CalcUtils.parser import Parser
+import ply
 import random
 
 #   instantiate Parser class
@@ -34,9 +35,8 @@ def summarize(numbers: list, op='+'):
     number_string = ''
     for i in numbers:
         number_string += i + op
-    res = str(p.parser.parse(number_string[:-1]))
-    return res
-
+    ans = str(p.parser.parse(number_string[:-1]))
+    return ans
 
 def arithmetic_mean(numbers):
     """!@brief The function calculates the arithmetic mean of a list of input numbers
@@ -57,8 +57,12 @@ def standard_deviation(numbers):
     sum_x_pow_2 = summarize(numbers, op='^2+')
     a_mean = arithmetic_mean(numbers)
     N = len(numbers)
-    res = p.parser.parse(f"2√(({sum_x_pow_2} - {N} * {a_mean}^2) / ({N} - 1))")
-    return res
+
+    try:
+        ans = p.parser.parse(f"2√(({sum_x_pow_2} - {N} * {a_mean}^2) / ({N} - 1))")
+    except ZeroDivisionError:
+        ans = 'Please provide at least two numbers for standard deviation'
+    return ans
 
 
 if __name__ == "__main__":
