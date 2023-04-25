@@ -55,6 +55,13 @@ class ParserComplexTestCase(unittest.TestCase):
         data = '3+3*3+(6-1)!/8+2^4/(2√16)+4!-3*5+2'
         self.assertEqual(self.p.parser.parse(data), 42)
 
+    def test_negative_sqrt1(self):
+        data = '(-4)√(16)'
+        self.assertEqual(self.p.parser.parse(data), 1/2)
+
+    def test_negative_sqrt2(self):
+        data = '(-3)√(27)'
+        self.assertEqual(round(self.p.parser.parse(data), 10), round(1/3, 10))
 
 class ParserAsociativityTestCase(unittest.TestCase):
 
