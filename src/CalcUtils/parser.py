@@ -54,7 +54,7 @@ def logger(level=logging.DEBUG):
 class Parser(object):
     tokens = Lexer.tokens
     log = False
-    write_tables = False
+    write_tables = True
     optimize = True
 
     def __init__(self):
