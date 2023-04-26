@@ -1,0 +1,3 @@
+xbazoa00 140 (matematická knihovna, testy, instalátor, makefile, programová dokumentace)
+xjuric31 80 (mockup, GUI, uživatelská příručka, testy, profiling)
+xkrou04 80 (GUI, uživatelská příručka, testy, profiling)
