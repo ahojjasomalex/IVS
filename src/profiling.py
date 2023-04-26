@@ -66,7 +66,7 @@ def standard_deviation(numbers):
 
 
 if __name__ == "__main__":
-    numbers = generate_integers(1000000)
+    numbers = generate_integers(1000)
     # input_numbers = input("Enter sequence of numbers for standard deviation:")
     # input_numbers = input_numbers.split()  # split by whitespaces
     res = standard_deviation(numbers)
