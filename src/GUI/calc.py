@@ -650,5 +650,5 @@ ui.setupUi(MainWindow)
 
 if __name__ == "__main__":
     pass
-    # MainWindow.show()
-    # sys.exit(app.exec())
+    MainWindow.show()
+    sys.exit(app.exec())

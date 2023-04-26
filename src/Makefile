@@ -1,5 +1,5 @@
 
-.PHONY: all pip init pack packfolder clean test doc run installer
+.PHONY: all pack clean run profile help test setup
 
 all: run
 
@@ -28,7 +28,6 @@ test:
 	python3 -m test_param
 
 setup:
-	pip3 freeze > requirements.txt
 	pip3 install -r requirements.txt
 
 
