@@ -1,12 +1,13 @@
-Prostredi
+GUI Caltulator implemented in Python and PyQt6 using LR parsing techniques (yacc, lex)
+
+Enviroment
 ---------
 
-Windows 10 64bit
+Tested: Windows 10 64bit
 
-Autori
+Authors
 ------
 
-Nazev tymu
 - xbazoa00 Alex Bažo 
 - xkrou04 Jan Kroutil 
 - xjuric31 Richard Juřica 
@@ -14,4 +15,4 @@ Nazev tymu
 Licence
 -------
 
-Tento program je poskytovan pod licenci GNU General Public License v.3+
+GNU General Public License v.3+
